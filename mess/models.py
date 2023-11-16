@@ -4,7 +4,7 @@ from django.db import models
 from django.db import models
 
 class Student(models.Model):
-    name = models.CharField(max_length=100, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
     qr_code = models.CharField(max_length=100)  # QR code details
     password = models.CharField(max_length=50)  # Password for the student
     meal_data = models.CharField(max_length=32)  
