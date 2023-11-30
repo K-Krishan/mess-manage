@@ -18,7 +18,7 @@ def signup_view(request):
         student = Student(name=name, qr_code=qr_code, password=password)
         # You might perform additional checks here before saving the student
         student.save()
-        return HttpResponse("Student created successfully!")
+        return HttpResponse("Student created successfully!") # send to profile
     return render(request, 'signup.html')
 
 def login_view(request):
@@ -29,7 +29,7 @@ def login_view(request):
         try:
             student = Student.objects.get(name=name, password=password)
             # Perform additional verification if needed
-            return HttpResponse("Login successful!")
+            return HttpResponse("Login successful!") # send to profile
         except Student.DoesNotExist:
             return HttpResponse("Invalid credentials. Please try again.")
 
@@ -44,7 +44,7 @@ def QRlogin_view(request):
             if qr_text:
                 try:
                     student = Student.objects.get(qr_code=qr_text)
-                    return HttpResponse(f"Login successful! Welcome, {student.name}!")
+                    return HttpResponse(f"Login successful! Welcome, {student.name}!") # send to profile
                 except Student.DoesNotExist:
                     return HttpResponse("User not found. Please try again.")
             else:

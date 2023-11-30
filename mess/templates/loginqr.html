@@ -6,6 +6,7 @@
     <title>Login</title>
 </head>
 <body>
+    <a href="/login">Login</a>
     <h2>Login with QR Code</h2>
     <form method="post" action="{% url 'login' %}" enctype="multipart/form-data">
         {% csrf_token %}
