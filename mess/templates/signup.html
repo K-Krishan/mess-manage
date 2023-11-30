@@ -1,0 +1,21 @@
+<!-- signup.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+</head>
+<body>
+    <h2>Signup</h2>
+    <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <!-- <label for="qr_code">QR Code:</label><br>
+        <input type="text" id="qr_code" name="qr_code"><br> -->
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Signup">
+    </form>
+</body>
+</html>

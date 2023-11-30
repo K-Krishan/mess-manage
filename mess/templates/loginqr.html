@@ -1,0 +1,16 @@
+<!-- login.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login with QR Code</h2>
+    <form method="post" action="{% url 'login' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="qr_image"><br><br>
+        <input type="submit" value="Login with QR Code">
+    </form>
+</body>
+</html>
