@@ -17,14 +17,14 @@ def signup_view(request):
         qr_code=name
         password = request.POST.get('password')
 
-        student = Student(name=name, qr_code=qr_code, password=password)
+        student = Student(name=name, qr_code=qr_code, password=password, meal_data="0000000000000000000000000000000")
         # You might perform additional checks here before saving the student
         student.save()
         imagedata = encode(qr_code)
         qr_code_image = imagedata.png(f'{name}.png', scale=6)
 
         # return HttpResponse("Student created successfully!") # send to profile
-        return render(request, 'profile.html', {'user_name': name, 'image_path': f'{name}.png'})
+        return render(request, 'profile.html', {'user_name': name, 'image_path': f'{name}.png', 'meal_data': student.meal_data})
     return render(request, 'signup.html')
 
 def login_view(request):
@@ -36,7 +36,7 @@ def login_view(request):
             student = Student.objects.get(name=name, password=password)
             # Perform additional verification if needed
             # return HttpResponse("Login successful!") # send to profile
-            return render(request, 'profile.html', {'user_name': name, 'image_path': f'{name}.png'})
+            return render(request, 'profile.html', {'user_name': name, 'image_path': f'{name}.png', 'meal_data': student.meal_data})
 
         except Student.DoesNotExist:
             return HttpResponse("Invalid credentials. Please try again.")
@@ -53,7 +53,7 @@ def QRlogin_view(request):
                 try:
                     student = Student.objects.get(qr_code=qr_text)
                     # return HttpResponse(f"Login successful! Welcome, {student.name}!") # send to profile
-                    return render(request, 'profile.html', {'user_name': student.name, 'image_path': f'{student.name}.png'})
+                    return render(request, 'profile.html', {'user_name': student.name, 'image_path': f'{student.name}.png', 'meal_data': student.meal_data})
                 except Student.DoesNotExist:
                     return HttpResponse("User not found. Please try again.")
             else:

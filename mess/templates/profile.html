@@ -6,6 +6,17 @@
 <html>
 <head>
     <title>User Profile</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 8px;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome, {{ user_name }}</h1>
@@ -13,6 +24,33 @@
         <img src="{% static image_path %}" alt="Profile Image">
     {% else %}
         <p>No image available.</p>
+    {% endif %}
+
+     <!-- Display meal data -->
+     <h2>Meal Consumption Data</h2>
+    {% if meal_data %}
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Dinner</th>
+            </tr>
+            <!-- {% with date_counter=1 %} -->
+                {% for meal in meal_data %}
+                    <tr>
+                        <td>Day {{ forloop.counter }}</td>
+                        <td>{% if meal == "1" or meal == "3" or meal == "5" or meal == "7" %}X{% endif %}</td>
+                        <td>{% if meal == "2" or meal == "3" or meal == "6" or meal == "7" %}X{% endif %}</td>
+                        <td>{% if meal == "4" or meal == "5" or meal == "6" or meal == "7" %}X{% endif %}</td>
+                    </tr>
+                    <!-- {% with date_counter=date_counter|add:"1" %}
+                    {% endwith %} -->
+                {% endfor %}
+            <!-- {% endwith %} -->
+        </table>
+    {% else %}
+        <p>No meal data available.</p>
     {% endif %}
     <!-- Other profile information or sections can be added here -->
 </body>
