@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
 from .qr import encode, decode
 from django.conf import settings
+from PIL import Image
 
 # Create your views here.
 
@@ -16,12 +17,17 @@ def signup_view(request):
         # edit qr code and save
         qr_code=name
         password = request.POST.get('password')
-
+        # guard for student existing
+        try:
+            student = Student.objects.get(name=student_name)
+            return HttpResponse("Student already exists")
+        except:
+            pass
         student = Student(name=name, qr_code=qr_code, password=password, meal_data="0000000000000000000000000000000")
         # You might perform additional checks here before saving the student
         student.save()
         imagedata = encode(qr_code)
-        qr_code_image = imagedata.png(f'{name}.png', scale=6)
+        qr_code_image = imagedata.png(f'{settings.QR_CODE_DIR}/{name}.png', scale=6)
 
         # return HttpResponse("Student created successfully!") # send to profile
         return render(request, 'profile.html', {'user_name': name, 'image_path': f'{name}.png', 'meal_data': student.meal_data})
@@ -48,7 +54,9 @@ def QRlogin_view(request):
         qr_image = request.FILES.get('qr_image')
 
         if qr_image:
-            qr_text = qr_to_text(Image.open(qr_image))
+            print(qr_image)
+            qr_text = decode(qr_image)
+            print(qr_text)
             if qr_text:
                 try:
                     student = Student.objects.get(qr_code=qr_text)
@@ -62,20 +70,6 @@ def QRlogin_view(request):
             return HttpResponse("No QR code submitted. Please select an image.")
 
     return render(request, 'loginqr.html')
-
-# def change_password(request):
-#     if request.method == 'POST':
-#         name = request.POST.get('name')
-#         old_password = request.POST.get('old_password')
-#         new_password = request.POST.get('new_password')
-#         try:
-#             student = Student.objects.get(name=name, password=old_password)
-#             student.password = new_password
-#             student.save()
-#             return HttpResponse("Password changed successfully!") # render same page with message
-#         except:
-#             return HttpResponse("Invalid.") # render same page with message
-#     return HttpResponse("Method not allowed.")
 
 def hello(request):
     template = loader.get_template('home.html')
