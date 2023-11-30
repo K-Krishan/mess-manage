@@ -1,0 +1,19 @@
+<!-- profile.html -->
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+    <h1>Welcome, {{ user_name }}</h1>
+    {% if image_path %}
+        <img src="{% static image_path %}" alt="Profile Image">
+    {% else %}
+        <p>No image available.</p>
+    {% endif %}
+    <!-- Other profile information or sections can be added here -->
+</body>
+</html>
