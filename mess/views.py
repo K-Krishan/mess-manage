@@ -5,19 +5,24 @@ from mess.models import Student
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
+from .qr import encode, decode
+from django.conf import settings
 
 # Create your views here.
 
 def signup_view(request):
     if request.method == 'POST':
         name = request.POST.get('name')
-        # edit qr code
+        # edit qr code and save
         qr_code=name
         password = request.POST.get('password')
 
         student = Student(name=name, qr_code=qr_code, password=password)
         # You might perform additional checks here before saving the student
         student.save()
+        imagedata = encode(qr_code)
+        qr_code_image = imagedata.png(f'{settings.QR_CODE_DIR}/{name}.png', scale=6)
+
         return HttpResponse("Student created successfully!") # send to profile
     return render(request, 'signup.html')
 

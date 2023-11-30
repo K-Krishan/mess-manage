@@ -2,7 +2,7 @@ import pyqrcode
 import qrtools
 
 def encode(data):
-    qr_code = pyqrcode.create("HORN O.K. PLEASE.")
+    qr_code = pyqrcode.create("some data")
     # qr.png("/qr_dir/horn.png", scale=6)
     return qr_code
 
