@@ -1,0 +1,17 @@
+<!-- vendorscan.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meals</title>
+</head>
+<body>
+    <h2>Scan QR Code for meals</h2>
+    <form method="post" action="{% url 'vendorscan' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="qr_image"><br><br>
+        <input type="submit" value="scan for meal">
+        {{ message }}
+    </form>
+</body>
+</html>

@@ -7,26 +7,6 @@ def encode(data):
     # qr.png("/qr_dir/horn.png", scale=6)
     return qr_code
 
-# def decode(file):
-#     qr = qrtools.QR()
-#     qr.decode(file)
-#     return qr.data
-
-# def decode(file):
-#     # # Name of the QR Code Image file
-#     # filename = "attandence_Record_QR_code.png"
-#     # # read the QRCODE image
-#     image = cv2.imdecode(numpy.fromstring(file.read(), numpy.uint8), cv2.IMREAD_UNCHANGED)
-#     detector = cv2.QRCodeDetector()
-#     data, vertices_array, binary_qrcode = detector.detectAndDecode(image)
-
-#     if vertices_array is not None:
-#         print("QRCode data:")
-#         print(data)
-#         return data
-#     else:
-#         print("There was some error") 
-
 def decode(qr_image):
     # Convert the uploaded image from InMemoryUploadedFile to numpy array
     nparr = np.frombuffer(qr_image.read(), np.uint8)
