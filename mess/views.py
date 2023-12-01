@@ -63,7 +63,7 @@ def signup_view(request):
             return HttpResponse("Student already exists")
         except:
             pass
-        student = Student(name=name, qr_code=qr_code, password=password, meal_data="00000000000000000000000000000000")
+        student = Student(name=name, qr_code=qr_code, password=password, meal_data="0000000000000000000000000000000")
         # You might perform additional checks here before saving the student
         student.save()
         imagedata = encode(qr_code)
@@ -89,6 +89,10 @@ def login_view(request):
 
     return render(request, 'login.html')
 
+def logout_view(request):
+    logout(request)
+    return redirect("home")
+
 def QRlogin_view(request):
     if request.method == 'POST':
         qr_image = request.FILES.get('qr_image')
@@ -111,7 +115,8 @@ def QRlogin_view(request):
 
     return render(request, 'loginqr.html')
 
-def hello(request):
+
+def home(request):
     template = loader.get_template('home.html')
     return HttpResponse(template.render())
 #########################################################################
